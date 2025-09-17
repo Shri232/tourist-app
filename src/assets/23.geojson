@@ -1,0 +1,27 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Restricted Zone 1",
+        "alert": "You entered a restricted area"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[76.9901, 10.9171], [76.9921, 10.9171], [76.9921, 10.9191], [76.9901, 10.9191], [76.9901, 10.9171]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Danger Line",
+        "alert": "You crossed a dangerous boundary"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[76.9851, 10.9181], [76.9951, 10.9181]]
+      }
+    }
+  ]
+}
