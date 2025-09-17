@@ -1,36 +1,40 @@
 // src/navigation/MainStack.js
 import React from 'react';
 import { View, Text } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// Import our simple stack navigator instead of the native one
+import SimpleStackNavigator from '../components/SimpleStackNavigator';
 import HomeScreen from '../screens/Home/HomeScreen';
 import MapScreen from '../screens/Home/MapScreen';
 import PanicButtonScreen from '../screens/Home/PanicButtonScreen';
 import TouristProfileScreen from '../screens/Profile/TouristProfileScreen';
 
-const Stack = createNativeStackNavigator();
+// Use our simple stack instead
+const Stack = SimpleStackNavigator;
+
+// Wrap the component in a try/catch
+const SafeScreenRenderer = ({ component: Component, ...props }) => {
+  try {
+    return <Component {...props} />;
+  } catch (error) {
+    console.error('Error rendering screen:', error);
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20}}>
+        <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 10}}>Screen Error</Text>
+        <Text style={{marginBottom: 10, textAlign: 'center'}}>{error.message}</Text>
+      </View>
+    );
+  }
+};
 
 export default function MainStack() {
+  // Use our simplified stack navigator with minimal options
   return (
-    <Stack.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: '#2563EB',
-        },
-        headerTintColor: '#FFFFFF',
-        headerTitleStyle: {
-          fontWeight: '600',
-        },
-      }}
-    >
+    <Stack initialRouteName="Home">
       <Stack.Screen 
         name="Home" 
         component={HomeScreen}
         options={{
           title: 'Smart Tourist',
-          headerStyle: {
-            backgroundColor: '#2563EB',
-          },
         }}
       />
       <Stack.Screen 
@@ -45,9 +49,6 @@ export default function MainStack() {
         component={PanicButtonScreen}
         options={{
           title: 'Emergency',
-          headerStyle: {
-            backgroundColor: '#EF4444',
-          },
         }}
       />
       <Stack.Screen 
@@ -57,6 +58,6 @@ export default function MainStack() {
           title: 'My Profile',
         }}
       />
-    </Stack.Navigator>
+    </Stack>
   );
 }

@@ -9,6 +9,7 @@ import com.facebook.react.ReactNativeHost
 import com.facebook.react.ReactPackage
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
+import com.rnmapbox.maps.MapboxModule
 
 class MainApplication : Application(), ReactApplication {
 
@@ -35,5 +36,13 @@ class MainApplication : Application(), ReactApplication {
   override fun onCreate() {
     super.onCreate()
     loadReactNative(this)
+    
+    // Initialize Mapbox
+    try {
+      MapboxModule.initializeWith(this)
+    } catch (e: Exception) {
+      // Handle initialization error
+      println("Mapbox initialization failed: ${e.message}")
+    }
   }
 }

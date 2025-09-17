@@ -1,11 +1,12 @@
 // src/navigation/AuthStack.js
 import React from 'react';
 import { View, Text } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// Import our simple stack navigator instead of the native one
+import SimpleStackNavigator from '../components/SimpleStackNavigator';
 import TouristRegistration from '../screens/Auth/TouristRegistration';
 
-// Create the stack outside of the component to avoid recreation on re-renders
-const Stack = createNativeStackNavigator();
+// Use our simple stack instead
+const Stack = SimpleStackNavigator;
 
 // Wrap the component in a try/catch
 const SafeScreenRenderer = ({ component: Component, ...props }) => {
@@ -23,22 +24,16 @@ const SafeScreenRenderer = ({ component: Component, ...props }) => {
 };
 
 export default function AuthStack() {
+  // Use our simplified stack navigator
   return (
-    <Stack.Navigator 
-      screenOptions={{ 
-        headerShown: false,
-        // Force key navigation style for React Navigation 7 compatibility
-        animation: 'default',
-      }}
-    >
+    <Stack initialRouteName="Register">
       <Stack.Screen 
         name="Register"
-        // Use render callback instead of component prop for safety
-        children={props => <SafeScreenRenderer component={TouristRegistration} {...props} />}
+        component={TouristRegistration}
         options={{
-          freezeOnBlur: true,
+          headerShown: false,
         }}
       />
-    </Stack.Navigator>
+    </Stack>
   );
 }

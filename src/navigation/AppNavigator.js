@@ -1,6 +1,5 @@
 // src/navigation/AppNavigator.js
 import React, { useContext, useEffect, useState, memo } from 'react';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import { AuthContext } from '../context/AuthContext';
@@ -51,28 +50,17 @@ export default function AppNavigator() {
 
   console.log('AppNavigator - rendering navigation, will show:', touristId ? 'MainStack' : 'AuthStack');
 
-  // Create a custom theme with all required properties
-  const MyTheme = {
-    ...DefaultTheme,
-    dark: false,
-    colors: {
-      ...DefaultTheme.colors,
-      primary: '#2563EB',
-      background: '#F8FAFC',
-      card: '#FFFFFF',
-      text: '#121212',
-      border: '#D1D5DB',
-      notification: '#EF4444',
-    },
-  };
-
-  // Memoize stacks to prevent unnecessary re-renders
+  // Since we're not using React Navigation's NavigationContainer anymore with our simple navigator,
+  // we can just render the stacks directly
+  
+  // We'll still memoize to prevent unnecessary re-renders
   const MemoizedAuthStack = memo(() => <AuthStack />);
   const MemoizedMainStack = memo(() => <MainStack />);
 
+  // With our simplified navigator, we don't need NavigationContainer anymore
   return (
-    <NavigationContainer theme={MyTheme} fallback={<ActivityIndicator size="large" />}>
+    <View style={{flex: 1}}>
       {touristId ? <MemoizedMainStack /> : <MemoizedAuthStack />}
-    </NavigationContainer>
+    </View>
   );
 }

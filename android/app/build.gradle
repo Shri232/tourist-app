@@ -84,6 +84,9 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        
+        // Add the following line for Mapbox
+        missingDimensionStrategy 'react-native-mapbox-gl', 'mapbox'
     }
     signingConfigs {
         debug {
@@ -117,5 +120,8 @@ dependencies {
         implementation jscFlavor
     }
     
-    // Mapbox dependencies will be handled by autolinking
+    // Add explicit Mapbox dependencies
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:10.15.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v10:2.0.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-localization-v10:2.0.0'
 }
